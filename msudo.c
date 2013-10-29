@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	if (argc<2 || argv[1]=='\0')
 	{
-		fprintf(stdout, "msudo version 0.3     Jaroslav Rohel, 2013\n\n", argv[0]);
+		fprintf(stdout, "msudo version 0.4     Jaroslav Rohel, 2013\n\n", argv[0]);
 		fprintf(stdout, "Usage:\n");
 		fprintf(stdout, "%s pathToPrgForExec_with_arguments\n\n", argv[0]);
 		fprintf(stdout, "Example:\n");
@@ -114,7 +114,9 @@ int main(int argc, char *argv[])
 		fclose(cfgFile);
 		if (found)
 		{
-			printf("Starting\n");
+			setreuid(0, 0);
+			setregid(0, 0);
+//			printf("Starting\n");
 //			system(wantPrgName);
 			execv(wantPrgName, &argv[1]);
 		}
