@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	if (argc<2 || argv[1]=='\0')
 	{
-		fprintf(stdout, "msudo version 0.4     Jaroslav Rohel, 2013\n\n", argv[0]);
+		fprintf(stdout, "msudo version 0.5     Jaroslav Rohel, 2013\n\n", argv[0]);
 		fprintf(stdout, "Usage:\n");
 		fprintf(stdout, "%s pathToPrgForExec_with_arguments\n\n", argv[0]);
 		fprintf(stdout, "Example:\n");
@@ -123,5 +123,5 @@ int main(int argc, char *argv[])
 		else fprintf(stdout, "User \"%s\" is not allowed to start program \"%s\" with arguments \"%s\"\n", pw->pw_name, wantPrgName, wantArgs);
 	}
 	else fprintf(stderr, "Can't open config file %s\n", CFG_FILE_NAME);
-	return 0;
+	return -1;
 }
