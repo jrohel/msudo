@@ -1,7 +1,7 @@
 /*
 msudo - Execute a command as another user.
 
-Jaroslav Rohel, 2013
+Ing. Jaroslav Rohel, 2013
 email: jaroslav.rohel@ais-brno.cz
 */
 
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	if (argc<2 || argv[1]=='\0')
 	{
-		fprintf(stdout, "msudo version 0.5     Jaroslav Rohel, 2013\n\n", argv[0]);
+		fprintf(stdout, "msudo version 0.6     Jaroslav Rohel, 2013, jaroslav.rohel@ais-brno.cz\n\n");
 		fprintf(stdout, "Usage:\n");
 		fprintf(stdout, "%s pathToPrgForExec_with_arguments\n\n", argv[0]);
 		fprintf(stdout, "Example:\n");
@@ -82,7 +82,28 @@ int main(int argc, char *argv[])
 //			printf("UserName: %s\n", username);
 //			printf("PrgName: %s\n", prgname);
 //			printf("pattern: %s\n", prgargspattern);
-			if (strcmp(username, pw->pw_name)==0 && strcmp(wantPrgName, prgname)==0)
+
+			//try find username in list - delimiter is comma ','
+			int userfound = 0;
+			const char *tmp = username;
+			while (*tmp!='\0')
+			{
+				int i;
+				for (i=0; tmp[i]==pw->pw_name[i] || tmp[i]==','; i++)
+				{
+					if (pw->pw_name[i] == '\0')
+					{
+						userfound = 1;
+						break;
+					}
+					if (tmp[i] == ',') break;
+				}
+				if (userfound) break;
+				while (*tmp!='\0' && *tmp!=',') tmp++;
+				if (*tmp == ',') tmp++;
+			}
+
+			if (userfound && strcmp(wantPrgName, prgname)==0)
 			{
 
 				if (params==2 && argc==2)
